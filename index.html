@@ -8,12 +8,12 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* 폰트 적용 */
-        @font-face {
-            font-family: 'DosSammul';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSSaemmul.woff') format('woff');
-            font-weight: normal;
-            font-display: swap;
-        }
+@font-face {
+    font-family: 'RoundedFixedsys';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
 
         body {
             font-family: 'DosSammul', sans-serif;
@@ -70,11 +70,11 @@
             
             <!-- 프로필 -->
             <div class="bg-white border-2 border-dashed border-[#FFA880] rounded-2xl p-4 text-center relative retro-shadow">
-                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FFA880] text-white px-3 py-1 rounded-full text-sm border-2 border-white">ONLINE 🟢</div>
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FFA880] text-white px-3 py-1 rounded-full text-sm border-2 border-white">후 아 유</div>
                 
                 <!-- 로그인 전 -->
                 <div id="login-area" class="mt-8 mb-4">
-                    <div class="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center text-3xl mb-4">🔒</div>
+                    <div class="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center text-3xl mb-4">🐷</div>
                     <p class="text-gray-500 text-sm mb-2">로그인이 필요해요!</p>
                     <button onclick="googleLogin()" class="bg-[#4285F4] text-white py-2 px-4 rounded-xl text-sm hover:bg-[#357ae8] transition flex items-center justify-center gap-2 mx-auto w-full">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.545,10.545v4.364h6.218c-0.818,2.727-3.545,4.364-6.218,4.364c-3.6,0-6.545-2.945-6.545-6.545s2.945-6.545,6.545-6.545c1.418,0,2.727,0.545,3.818,1.455l3.273-3.273C17.564,2.345,15.164,1.273,12.545,1.273C6.655,1.273,1.818,6.109,1.818,12c0,5.891,4.836,10.727,10.727,10.727c5.345,0,9.455-3.927,9.455-9.455c0-0.873-0.073-1.527-0.218-2.182H12.545z"/></svg>
@@ -88,7 +88,7 @@
                         <img id="user-photo" src="" class="w-full h-full object-cover hidden">
                         <div id="user-emoji" class="w-full h-full flex items-center justify-center text-6xl">🐰</div>
                     </div>
-                    <h2 id="user-name" class="text-2xl font-bold text-[#FF8A5C] mb-1">뚜</h2>
+                    <h2 id="user-name" class="text-2xl font-bold text-[#FF8A5C] mb-1">뚜니</h2>
                     
                     <!-- ID 표시 영역 -->
                     <div class="mb-4 text-left bg-gray-50 p-2 rounded border border-gray-200">
@@ -102,7 +102,7 @@
                     <button onclick="googleLogout()" class="text-xs text-gray-400 underline hover:text-[#FFA880]">로그아웃</button>
                 </div>
 
-                <div class="mt-4 bg-[#FFA880] text-white py-2 px-4 rounded-xl text-lg cursor-pointer hover:bg-[#FF8A5C]">일촌 신청하기 ♡</div>
+                <div class="mt-4 bg-[#FFA880] text-white py-2 px-4 rounded-xl text-lg cursor-pointer hover:bg-[#FF8A5C]">일촌 신청 ♡</div>
             </div>
 
             <!-- 메뉴 네비게이션 -->
@@ -132,7 +132,7 @@
                     <p class="text-gray-400 text-sm">내일을 기대하는 오늘</p>
                 </div>
                 <div class="text-xs text-right hidden sm:block">
-                    <p class="animate-blink text-[#FFA880]">LOGIN ON</p>
+                    <p class="animate-blink text-[#FFA880]">ONLY ASTRO MJ</p>
                 </div>
             </div>
 
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="bg-[#FFF5F0] p-4 rounded-xl border border-[#FFA880]">
-                    <h3 class="text-lg text-[#FF8A5C] mb-2 font-bold">📢 공지</h3>
+                    <h3 class="text-lg text-[#FF8A5C] mb-2 font-bold">📢 Notice</h3>
                     <p class="text-sm text-gray-600">방명록을 작성해보세요</p>
                 </div>
             </div>
@@ -157,7 +157,7 @@
             <!-- 2. DIARY 섹션 -->
             <div id="page-diary" class="page-section">
                 <div id="diary-write-area" class="bg-[#FFF9F5] p-4 rounded-xl border-2 border-dashed border-[#FFA880] mb-6 hidden">
-                    <h3 class="text-[#FFA880] mb-2">✏️ 오늘의 일기 쓰기</h3>
+                    <h3 class="text-[#FFA880] mb-2">오늘의 일기</h3>
                     <input type="text" id="diary-title" placeholder="제목을 입력하세요" class="w-full mb-2 p-2 border border-[#FFD4B8] rounded font-[DosSammul] focus:outline-none focus:border-[#FFA880]">
                     <textarea id="diary-content" placeholder="오늘 무슨 일이 있었나요?" class="w-full h-20 p-2 border border-[#FFD4B8] rounded font-[DosSammul] focus:outline-none focus:border-[#FFA880] resize-none"></textarea>
                     <div class="text-right mt-2">
