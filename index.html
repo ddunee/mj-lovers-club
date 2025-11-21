@@ -49,14 +49,11 @@
 
         .sticker { position: absolute; z-index: 20; pointer-events: none; filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1)); }
         
-        /* 화면 전환 유틸리티 */
         .page-section { display: none; animation: fadeIn 0.5s; }
         .page-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .nav-btn.active { background-color: #FFA880; color: white; transform: scale(1.05); }
-
-        /* 로딩 인디케이터 */
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid #FFA880; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
@@ -75,21 +72,38 @@
             <!-- 프로필 -->
             <div class="bg-white border-2 border-dashed border-[#FFA880] rounded-2xl p-4 text-center relative retro-shadow">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FFA880] text-white px-3 py-1 rounded-full text-sm border-2 border-white">ONLINE 🟢</div>
-                <div class="w-32 h-32 mx-auto bg-[#FFE4D6] rounded-full border-4 border-white shadow-lg overflow-hidden mb-4 mt-4 relative group">
-                    <div class="w-full h-full flex items-center justify-center text-6xl">🐰</div>
-                </div>
-                <h2 class="text-2xl font-bold text-[#FF8A5C] mb-1">피치 공주</h2>
                 
-                <!-- ID 표시 영역 (수정됨) -->
-                <div class="mb-4 text-left bg-gray-50 p-2 rounded border border-gray-200">
-                    <p class="text-[10px] text-gray-400 mb-1">🔑 내 주인님 ID (복사하세요!)</p>
-                    <div class="flex gap-1">
-                        <input type="text" id="user-id-val" readonly class="w-full text-[10px] border rounded p-1 bg-white text-gray-600 font-mono focus:outline-none" value="Loading...">
-                        <button onclick="copyMyId()" class="bg-[#FFA880] text-white text-[10px] px-2 rounded hover:bg-[#FF8A5C] whitespace-nowrap">Copy</button>
-                    </div>
+                <!-- 로그인 전: 구글 로그인 버튼 -->
+                <div id="login-area" class="mt-8 mb-4">
+                    <div class="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center text-3xl mb-4">🔒</div>
+                    <p class="text-gray-500 text-sm mb-2">주인장만 들어오세요!</p>
+                    <button onclick="googleLogin()" class="bg-[#4285F4] text-white py-2 px-4 rounded-xl text-sm hover:bg-[#357ae8] transition flex items-center justify-center gap-2 mx-auto w-full">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.545,10.545v4.364h6.218c-0.818,2.727-3.545,4.364-6.218,4.364c-3.6,0-6.545-2.945-6.545-6.545s2.945-6.545,6.545-6.545c1.418,0,2.727,0.545,3.818,1.455l3.273-3.273C17.564,2.345,15.164,1.273,12.545,1.273C6.655,1.273,1.818,6.109,1.818,12c0,5.891,4.836,10.727,10.727,10.727c5.345,0,9.455-3.927,9.455-9.455c0-0.873-0.073-1.527-0.218-2.182H12.545z"/></svg>
+                        구글 로그인
+                    </button>
                 </div>
 
-                <div class="bg-[#FFA880] text-white py-2 px-4 rounded-xl text-lg cursor-pointer hover:bg-[#FF8A5C]">일촌 신청하기 ♡</div>
+                <!-- 로그인 후: 프로필 정보 -->
+                <div id="profile-area" class="hidden">
+                    <div class="w-32 h-32 mx-auto bg-[#FFE4D6] rounded-full border-4 border-white shadow-lg overflow-hidden mb-4 mt-4 relative group">
+                        <img id="user-photo" src="" class="w-full h-full object-cover hidden">
+                        <div id="user-emoji" class="w-full h-full flex items-center justify-center text-6xl">🐰</div>
+                    </div>
+                    <h2 id="user-name" class="text-2xl font-bold text-[#FF8A5C] mb-1">피치 공주</h2>
+                    
+                    <!-- ID 표시 영역 (구글 UID) -->
+                    <div class="mb-4 text-left bg-gray-50 p-2 rounded border border-gray-200">
+                        <p class="text-[10px] text-gray-400 mb-1">🔑 내 구글 ID (복사해서 규칙 수정!)</p>
+                        <div class="flex gap-1">
+                            <input type="text" id="user-id-val" readonly class="w-full text-[10px] border rounded p-1 bg-white text-gray-600 font-mono focus:outline-none" value="...">
+                            <button onclick="copyMyId()" class="bg-[#FFA880] text-white text-[10px] px-2 rounded hover:bg-[#FF8A5C] whitespace-nowrap">Copy</button>
+                        </div>
+                    </div>
+
+                    <button onclick="googleLogout()" class="text-xs text-gray-400 underline hover:text-[#FFA880]">로그아웃</button>
+                </div>
+
+                <div class="mt-4 bg-[#FFA880] text-white py-2 px-4 rounded-xl text-lg cursor-pointer hover:bg-[#FF8A5C]">일촌 신청하기 ♡</div>
             </div>
 
             <!-- 메뉴 네비게이션 -->
@@ -119,7 +133,7 @@
                     <p class="text-gray-400 text-sm">오늘도 뽀용뽀용하게 기록하기 ☁️</p>
                 </div>
                 <div class="text-xs text-right hidden sm:block">
-                    <p class="animate-blink text-[#FFA880]">REAL MODE ON</p>
+                    <p class="animate-blink text-[#FFA880]">GOOGLE LOGIN MODE</p>
                 </div>
             </div>
 
@@ -132,22 +146,19 @@
                     <div class="text-5xl absolute bottom-10 right-20">🖥️</div>
                     <div class="text-center text-[#FFA880] opacity-60">
                         <p class="text-lg">Welcome to my Room!</p>
-                        <p class="text-sm">(메뉴를 눌러서 글을 써보세요)</p>
+                        <p class="text-sm">(왼쪽에서 구글 로그인을 해주세요)</p>
                     </div>
                 </div>
-                
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="bg-[#FFF5F0] p-4 rounded-xl border border-[#FFA880]">
-                        <h3 class="text-lg text-[#FF8A5C] mb-2 font-bold">📢 공지사항</h3>
-                        <p class="text-sm text-gray-600">이제 다이어리와 사진첩이 실제로 작동해요!<br>왼쪽 메뉴를 눌러서 소중한 추억을 남겨보세요.</p>
-                    </div>
+                <div class="bg-[#FFF5F0] p-4 rounded-xl border border-[#FFA880]">
+                    <h3 class="text-lg text-[#FF8A5C] mb-2 font-bold">📢 알림</h3>
+                    <p class="text-sm text-gray-600">구글 로그인을 해야 글쓰기/삭제 버튼이 나타납니다!<br>방명록은 누구나 쓸 수 있어요.</p>
                 </div>
             </div>
 
             <!-- 2. DIARY 섹션 -->
             <div id="page-diary" class="page-section">
                 <!-- 일기 쓰기 폼 -->
-                <div class="bg-[#FFF9F5] p-4 rounded-xl border-2 border-dashed border-[#FFA880] mb-6">
+                <div id="diary-write-area" class="bg-[#FFF9F5] p-4 rounded-xl border-2 border-dashed border-[#FFA880] mb-6 hidden">
                     <h3 class="text-[#FFA880] mb-2">✏️ 오늘의 일기 쓰기</h3>
                     <input type="text" id="diary-title" placeholder="제목을 입력하세요" class="w-full mb-2 p-2 border border-[#FFD4B8] rounded font-[DosSammul] focus:outline-none focus:border-[#FFA880]">
                     <textarea id="diary-content" placeholder="오늘 무슨 일이 있었나요?" class="w-full h-20 p-2 border border-[#FFD4B8] rounded font-[DosSammul] focus:outline-none focus:border-[#FFA880] resize-none"></textarea>
@@ -155,6 +166,8 @@
                         <button onclick="addDiary()" class="bg-[#FFA880] text-white px-4 py-2 rounded hover:bg-[#FF8A5C] transition">저장하기</button>
                     </div>
                 </div>
+                <div id="diary-login-msg" class="text-center text-gray-400 py-4 text-sm">🔒 로그인을 하면 일기를 쓸 수 있어요.</div>
+                
                 <!-- 일기 목록 -->
                 <div id="diary-list" class="space-y-4">
                     <div class="loader"></div>
@@ -164,7 +177,7 @@
             <!-- 3. PHOTO 섹션 -->
             <div id="page-photo" class="page-section">
                 <!-- 사진 올리기 폼 -->
-                <div class="bg-[#FFF9F5] p-4 rounded-xl border-2 border-dashed border-[#FFA880] mb-6">
+                <div id="photo-write-area" class="bg-[#FFF9F5] p-4 rounded-xl border-2 border-dashed border-[#FFA880] mb-6 hidden">
                     <h3 class="text-[#FFA880] mb-2">📸 사진 올리기</h3>
                     <div class="flex gap-2 items-center">
                         <input type="file" id="photo-input" accept="image/*" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#FFA880] file:text-white hover:file:bg-[#FF8A5C]">
@@ -172,6 +185,8 @@
                     </div>
                     <p class="text-xs text-gray-400 mt-2">* 너무 큰 사진은 자동으로 작게 조정돼요!</p>
                 </div>
+                <div id="photo-login-msg" class="text-center text-gray-400 py-4 text-sm">🔒 로그인을 하면 사진을 올릴 수 있어요.</div>
+
                 <!-- 사진 목록 (그리드) -->
                 <div id="photo-list" class="grid grid-cols-2 md:grid-cols-3 gap-3">
                     <div class="loader col-span-full"></div>
@@ -198,13 +213,9 @@
     <!-- Firebase SDK Modules -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // Google Auth 관련 기능 추가 (GoogleAuthProvider, signInWithPopup)
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-        // [업데이트 완료] 님이 알려주신 파이어베이스 키가 적용되었습니다!
-        // 이제 이 코드는 님의 'ddunee' 프로젝트와 연결됩니다.
-        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKoL7t8QgoybDCPNvVDiWYX0X7EawW7oM",
@@ -216,62 +227,116 @@
             measurementId: "G-GQ5WDGFXTD"
         };
 
-        // 앱 이름 설정 (원하는 대로 바꿔도 됩니다)
         const appId = "my-peach-diary";
-
-        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+        
+        // ⚠️ 중요: 구글 로그인을 하면 내 ID가 바뀝니다!
+        // 로그인 후 화면에 뜨는 '내 구글 ID'를 복사해서 아래 ADMIN_ID를 수정해야 합니다.
+        // 그리고 파이어베이스 규칙(Rules)도 이 새 ID로 다시 바꿔줘야 해요.
+        let ADMIN_ID = "GZbeG0Ojf5f2YA2A7n6Jz6vjToT2"; // 아직 옛날 익명 ID일 수 있음
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
 
         let currentUser = null;
 
-        // 인증 및 초기화
-        async function init() {
-            try {
-                // 익명 로그인
-                await signInAnonymously(auth);
+        // 초기화 (로그인 상태 감지)
+        function init() {
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                updateUI(user);
                 
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        currentUser = user;
-                        // ID 표시 (복사용)
-                        document.getElementById('user-id-val').value = user.uid;
-                        
-                        // 데이터 리스너 연결
-                        subscribeDiary();
-                        subscribePhotos();
-                        subscribeGuestbook();
-                    }
-                });
-            } catch (error) {
-                console.error("Auth Error:", error);
-                alert("로그인에 실패했습니다. 새로고침 해주세요.");
-            }
+                // 데이터 리스너 연결
+                subscribeDiary();
+                subscribePhotos();
+                subscribeGuestbook();
+            });
         }
         init();
+
+        // 구글 로그인 함수
+        window.googleLogin = async () => {
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error(error);
+                alert("로그인 실패! (팝업이 차단되었거나 도메인 승인이 안 되었을 수 있어요)");
+            }
+        };
+
+        // 로그아웃 함수
+        window.googleLogout = () => {
+            signOut(auth);
+            alert("로그아웃 되었습니다.");
+        };
 
         // ID 복사 기능
         window.copyMyId = () => {
             const idVal = document.getElementById('user-id-val');
             idVal.select();
-            document.execCommand('copy'); // iFrame 호환용
-            alert("내 ID가 복사되었어요! 이제 파이어베이스 규칙에 붙여넣으세요.");
+            document.execCommand('copy');
+            alert("내 구글 ID가 복사되었어요! 1. 코드의 ADMIN_ID 수정, 2. 파이어베이스 규칙 수정 꼭 하세요!");
+        }
+
+        // UI 업데이트 (로그인 여부에 따라 화면 바꿈)
+        function updateUI(user) {
+            const loginArea = document.getElementById('login-area');
+            const profileArea = document.getElementById('profile-area');
+            
+            const diaryWrite = document.getElementById('diary-write-area');
+            const diaryMsg = document.getElementById('diary-login-msg');
+            const photoWrite = document.getElementById('photo-write-area');
+            const photoMsg = document.getElementById('photo-login-msg');
+
+            if (user) {
+                // 로그인 상태
+                loginArea.classList.add('hidden');
+                profileArea.classList.remove('hidden');
+                
+                // 프로필 정보 표시
+                document.getElementById('user-name').innerText = user.displayName || "이름 없음";
+                document.getElementById('user-id-val').value = user.uid;
+                ADMIN_ID = user.uid; // 현재 로그인한 사람을 일단 관리자로 간주 (규칙에서 막히겠지만 UI 처리를 위해)
+
+                if(user.photoURL) {
+                    document.getElementById('user-photo').src = user.photoURL;
+                    document.getElementById('user-photo').classList.remove('hidden');
+                    document.getElementById('user-emoji').classList.add('hidden');
+                }
+
+                // 글쓰기 창 보이기
+                diaryWrite.classList.remove('hidden');
+                diaryMsg.classList.add('hidden');
+                photoWrite.classList.remove('hidden');
+                photoMsg.classList.add('hidden');
+
+            } else {
+                // 로그아웃 상태
+                loginArea.classList.remove('hidden');
+                profileArea.classList.add('hidden');
+                
+                // 글쓰기 창 숨기기
+                diaryWrite.classList.add('hidden');
+                diaryMsg.classList.remove('hidden');
+                photoWrite.classList.add('hidden');
+                photoMsg.classList.remove('hidden');
+            }
+            
+            // 리스트 새로고침 (삭제 버튼 갱신을 위해)
+            // subscribe 함수들이 onSnapshot이라 자동 갱신되지만 강제 트리거 효과
         }
 
         // --- 1. DIARY 기능 ---
         window.addDiary = async () => {
-            if (!currentUser) return;
+            if (!currentUser) return alert('로그인이 필요해요!');
             const title = document.getElementById('diary-title').value;
             const content = document.getElementById('diary-content').value;
             if (!title || !content) return alert('제목과 내용을 입력해주세요!');
 
             try {
-                // users 컬렉션 대신 'public_diary' 등으로 변경하면 다른 사람도 볼 수 있게 만들 수 있음
-                // 현재는 개인 다이어리 컨셉 유지
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'diary'), {
-                    authorId: currentUser.uid, // 작성자 표시
+                    authorId: currentUser.uid,
                     title: title,
                     content: content,
                     createdAt: serverTimestamp()
@@ -281,31 +346,28 @@
                 alert('일기가 저장되었어요! 📒');
             } catch (e) {
                 console.error(e);
-                alert('저장 실패 ㅠㅠ (권한이 없거나 오류가 났어요)');
+                alert('저장 실패 ㅠㅠ (파이어베이스 규칙에 내 새 구글 ID를 등록했나요?)');
             }
         };
 
         function subscribeDiary() {
-            // 누구나 볼 수 있는 public 데이터 읽기
             const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'diary'));
-            
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('diary-list');
                 list.innerHTML = '';
-                
                 const docs = snapshot.docs.map(d => ({id: d.id, ...d.data()}));
                 docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
                 if (docs.length === 0) {
-                    list.innerHTML = '<p class="text-center text-gray-400 py-10">아직 작성된 일기가 없어요.</p>';
+                    list.innerHTML = '<p class="text-center text-gray-400 py-10">작성된 일기가 없어요.</p>';
                     return;
                 }
 
                 docs.forEach(data => {
                     const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() : '방금 전';
-                    // 삭제 버튼은 내가 쓴 글일 때만 보이게 처리
-                    const isMyPost = currentUser && data.authorId === currentUser.uid;
-                    const deleteBtn = isMyPost ? 
+                    // 내가 쓴 글이거나 내가 로그인 중일 때(나만 쓰기 모드이므로) 삭제 가능
+                    const isAuthor = currentUser && data.authorId === currentUser.uid;
+                    const deleteBtn = isAuthor ? 
                         `<button onclick="deleteItem('diary', '${data.id}')" class="absolute top-2 right-2 text-xs text-red-300 hover:text-red-500 transition">삭제</button>` : '';
 
                     const el = document.createElement('div');
@@ -320,12 +382,12 @@
                     `;
                     list.appendChild(el);
                 });
-            }, (error) => console.error("Diary load error:", error));
+            });
         }
 
         // --- 2. PHOTO 기능 ---
         window.uploadPhoto = async () => {
-            if (!currentUser) return;
+            if (!currentUser) return alert('로그인이 필요해요!');
             const fileInput = document.getElementById('photo-input');
             const file = fileInput.files[0];
             if (!file) return alert('사진을 선택해주세요!');
@@ -352,7 +414,7 @@
                         fileInput.value = '';
                         alert('사진이 업로드 되었어요! 📸');
                     } catch (e) {
-                        alert('업로드 실패 (권한이 없거나 용량 초과)');
+                        alert('업로드 실패 (파이어베이스 규칙 확인 필요)');
                     }
                 };
                 img.src = e.target.result;
@@ -362,11 +424,9 @@
 
         function subscribePhotos() {
             const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'photos'));
-            
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('photo-list');
                 list.innerHTML = '';
-                
                 const docs = snapshot.docs.map(d => ({id: d.id, ...d.data()}));
                 docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
@@ -376,8 +436,8 @@
                 }
 
                 docs.forEach(data => {
-                    const isMyPost = currentUser && data.authorId === currentUser.uid;
-                    const deleteBtn = isMyPost ? 
+                    const isAuthor = currentUser && data.authorId === currentUser.uid;
+                    const deleteBtn = isAuthor ? 
                         `<button onclick="deleteItem('photos', '${data.id}')" class="absolute top-1 right-1 bg-white rounded-full p-1 text-xs text-red-400 shadow z-10">🗑️</button>` : '';
 
                     const el = document.createElement('div');
@@ -388,19 +448,21 @@
                     `;
                     list.appendChild(el);
                 });
-            }, (error) => console.error("Photo load error:", error));
+            });
         }
 
-        // --- 3. GUESTBOOK 기능 (방명록은 누구나 쓸 수 있게!) ---
+        // --- 3. GUESTBOOK 기능 ---
         window.addGuestbook = async () => {
-            if (!currentUser) return;
+            // 방명록은 로그인 안 해도 쓸 수 있게 할까요? 
+            // 일단 친구들이 쓰는 거니까 'currentUser' 체크를 뺐습니다. 누구나 가능!
             const name = document.getElementById('guest-name').value;
             const msg = document.getElementById('guest-msg').value;
             if (!name || !msg) return;
 
             try {
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'), {
-                    authorId: currentUser.uid,
+                    // 익명이면 'anonymous'라고 저장
+                    authorId: currentUser ? currentUser.uid : 'anonymous',
                     name: name,
                     message: msg,
                     createdAt: serverTimestamp()
@@ -413,18 +475,19 @@
 
         function subscribeGuestbook() {
             const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'));
-            
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('guest-list');
                 list.innerHTML = '';
-                
                 const docs = snapshot.docs.map(d => ({id: d.id, ...d.data()}));
                 docs.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
                 docs.forEach(data => {
+                    // 방명록 삭제: 내가 쓴 거거나, 내가 '대장'인 경우
                     const isMyPost = currentUser && data.authorId === currentUser.uid;
-                    // 방명록 삭제는 주인장도 할 수 있어야 하므로 규칙이 조금 더 복잡할 수 있으나, 일단 작성자 본인만 삭제 가능하게 처리
-                    const deleteBtn = isMyPost ? 
+                    // 내 방명록에 남이 쓴 글도 지우고 싶다면? -> 내가 로그인되어 있으면 무조건 삭제 버튼 보이게
+                    const canDelete = currentUser; 
+
+                    const deleteBtn = canDelete ? 
                         `<button onclick="deleteItem('guestbook', '${data.id}')" class="text-gray-300 hover:text-red-400">x</button>` : '';
 
                     const el = document.createElement('div');
@@ -435,16 +498,15 @@
                     `;
                     list.appendChild(el);
                 });
-            }, (error) => console.error("Guestbook error:", error));
+            });
         }
 
-        // --- 공통 유틸리티 ---
         window.deleteItem = async (collectionName, docId) => {
             if (!currentUser || !confirm('정말 삭제할까요?')) return;
             try {
                 await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, docId));
             } catch(e) {
-                alert('삭제 실패 (내 글이 아니거나 권한이 없어요)');
+                alert('삭제 실패 (권한이 없어요)');
             }
         };
 
