@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MJ Lovers-club</title>
+    <title>🇼🇪🇱🇨🇴🇲🇪 🇹🇴 🇹🇭🇪 🇳🇪🇼 🇦🇩🇻🇪🇳🇹🇺🇷🇪</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -77,11 +77,11 @@
             <div class="bg-white border-2 border-dashed border-[#FFA880] rounded-2xl p-4 text-center relative retro-shadow">
                 <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FFA880] text-white px-3 py-1 rounded-full text-sm border-2 border-white">ONLINE 🟢</div>
                 <div class="w-32 h-32 mx-auto bg-[#FFE4D6] rounded-full border-4 border-white shadow-lg overflow-hidden mb-4 mt-4 relative group">
-                    <div class="w-full h-full flex items-center justify-center text-6xl">🐰</div>
+                    <div class="w-full h-full flex items-center justify-center text-6xl">❣️</div>
                 </div>
-                <h2 class="text-2xl font-bold text-[#FF8A5C] mb-1">피치 공주</h2>
+                <h2 class="text-2xl font-bold text-[#FF8A5C] mb-1">뚜니</h2>
                 <p class="text-gray-500 text-sm mb-4" id="user-id-display">Loading...</p>
-                <div class="bg-[#FFA880] text-white py-2 px-4 rounded-xl text-lg cursor-pointer hover:bg-[#FF8A5C]">일촌 신청하기 ♡</div>
+                <div class="bg-[#FFA880] text-white py-2 px-4 rounded-xl text-lg cursor-pointer hover:bg-[#FF8A5C]">일촌 신청하기♡</div>
             </div>
 
             <!-- 메뉴 네비게이션 -->
@@ -108,7 +108,7 @@
             <div class="border-b-2 border-dashed border-[#FFA880] pb-4 mb-6 flex justify-between items-end sticky top-0 bg-white z-10">
                 <div>
                     <h1 class="text-3xl md:text-4xl text-[#FFA880] mb-1 drop-shadow-sm">My Peach World</h1>
-                    <p class="text-gray-400 text-sm">나의 하루 기록</p>
+                    <p class="text-gray-400 text-sm">오늘도 뽀용뽀용하게 기록하기 ☁️</p>
                 </div>
                 <div class="text-xs text-right hidden sm:block">
                     <p class="animate-blink text-[#FFA880]">REAL MODE ON</p>
@@ -119,9 +119,9 @@
             <div id="page-home" class="page-section active">
                 <div class="dashed-box min-h-[200px] p-4 mb-6 relative bg-[#FFF9F5] flex items-center justify-center overflow-hidden">
                     <div class="absolute top-2 left-2 bg-[#FFA880] text-white text-xs px-2 py-1 rounded">MINI ROOM</div>
-                    <div class="text-6xl absolute bottom-4 left-10 animate-bounce">🧡</div>
+                    <div class="text-6xl absolute bottom-4 left-10 animate-bounce">🧸</div>
                     <div class="text-4xl absolute top-10 right-10 animate-wiggle text-[#FFA880]">☁️</div>
-                    <div class="text-5xl absolute bottom-10 right-2🐷</div>
+                    <div class="text-5xl absolute bottom-10 right-20">🖥️</div>
                     <div class="text-center text-[#FFA880] opacity-60">
                         <p class="text-lg">Welcome to my Room!</p>
                         <p class="text-sm">(메뉴를 눌러서 글을 써보세요)</p>
@@ -193,12 +193,19 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Init
-        const firebaseConfig = JSON.parse(__firebase_config);
+const firebaseConfig = {
+  apiKey: "AIzaSyAKoL7t8QgoybDCPNvVDiWYX0X7EawW7oM",
+  authDomain: "ddunee-d98c8.firebaseapp.com",
+  projectId: "ddunee-d98c8",
+  storageBucket: "ddunee-d98c8.firebasestorage.app",
+  messagingSenderId: "811699710436",
+  appId: "1:811699710436:web:7a5ff72d4c972dc95efff1",
+  measurementId: "G-GQ5WDGFXTD"
+};
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = __app_id;
 
         let currentUser = null;
 
