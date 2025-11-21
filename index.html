@@ -219,9 +219,10 @@
         const appId = "my-peach-diary";
         
         // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-        // [중요] 구글 로그인 후 나오는 새 ID를 여기에 붙여넣으세요!
-        // (그래야 대장 권한이 작동합니다)
-        const ADMIN_ID = "여기에_내_구글_ID_붙여넣기"; 
+        // [업데이트 완료] 스크린샷의 ID를 적용했습니다!
+        // 이제 이 ID로 로그인하면 '대장'으로 인식되어 모든 글을 삭제할 수 있습니다.
+        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        const ADMIN_ID = "zT7TuSZWf0eKde0Ho53mqY4BlEJ3"; 
         // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
         const app = initializeApp(firebaseConfig);
@@ -256,7 +257,7 @@
             const idVal = document.getElementById('user-id-val');
             idVal.select();
             document.execCommand('copy');
-            alert("ID 복사 완료! 1. 코드의 ADMIN_ID 수정, 2. 파이어베이스 규칙 수정 꼭 하세요!");
+            alert("ID 복사 완료! 파이어베이스 규칙 수정에 사용하세요.");
         }
 
         function updateUI(user) {
